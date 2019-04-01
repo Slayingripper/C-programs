@@ -1,0 +1,29 @@
+stages:
+    - build
+    - test
+
+build-code:
+    stage: build
+    tags:
+        - g51pga_2017_coursework_2_sandbox
+    artifacts:
+        name: "$CI_COMMIT_REF_NAME"
+        when: on_success
+        expire_in: 1 hour
+        paths:
+            - log/
+    script:
+        - run_build
+
+test-code:
+    stage: test
+    tags:
+        - g51pga_2017_coursework_2_assessor
+    artifacts:
+        name: "$CI_COMMIT_REF_NAME"
+        when: on_success
+        expire_in: 1 week
+        paths:
+            - log/
+    script:
+        - run_test

@@ -1,0 +1,31 @@
+stages:
+    - build
+    - test
+
+build-code:
+    stage: build
+    services: 
+        - g51csf_2017_sockets_service
+    tags:
+        - g51csf_2017_sockets_quote_sandbox
+    artifacts:
+        name: "$CI_COMMIT_REF_NAME"
+        when: on_success
+        expire_in: 1 hour
+        paths:
+            - log/
+    script:
+        - run_build
+
+test-code:
+    stage: test
+    tags:
+        - g51csf_2017_sockets_assessor
+    artifacts:
+        name: "$CI_COMMIT_REF_NAME"
+        when: on_success
+        expire_in: 1 week
+        paths:
+            - log/
+    script:
+        - run_test
